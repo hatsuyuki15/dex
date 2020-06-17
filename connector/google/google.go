@@ -219,8 +219,7 @@ func (c *googleConnector) createIdentity(ctx context.Context, identity connector
 		}
 
 		if len(c.groups) > 0 {
-			groups = pkg_groups.Filter(groups, c.groups)
-			if len(groups) == 0 {
+			if !pkg_groups.Contain(groups, c.groups) {
 				return identity, fmt.Errorf("google: user %q is not in any of the required groups", claims.Username)
 			}
 		}

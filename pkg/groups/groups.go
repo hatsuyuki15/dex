@@ -16,3 +16,17 @@ func Filter(given, required []string) []string {
 	}
 	return groups
 }
+
+// Check if the given groups contains at least one of required groups
+func Contain(given, required []string) bool {
+	groups := make(map[string]struct{})
+	for _, group := range given {
+		groups[group] = struct{}{}
+	}
+	for _, group := range required {
+		if _, ok := groups[group]; ok {
+			return true
+		}
+	}
+	return false
+}

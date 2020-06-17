@@ -24,3 +24,21 @@ func TestFilter(t *testing.T) {
 		})
 	}
 }
+
+func TestContain(t *testing.T) {
+	cases := map[string]struct {
+		given, required []string
+		expected        bool
+	}{
+		"contains one":   {given: []string{"foo", "bar"}, required: []string{"foo"}, expected: true},
+		"contains many":  {given: []string{"foo", "bar"}, required: []string{"foo", "bar"}, expected: true},
+		"contains none":  {given: []string{"foo", "bar"}, required: []string{"cloud"}, expected: false},
+		"empty required": {given: []string{"foo", "bar"}, required: []string{}, expected: false},
+	}
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			actual := groups.Contain(tc.given, tc.required)
+			assert.Equal(t, tc.expected, actual)
+		})
+	}
+}
